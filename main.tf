@@ -1,26 +1,21 @@
 variable "public_key" {}
 variable "image" {}
 variable "name" {}
-variable "location" {}
 variable "cloud-config" {}
 
 variable "os_username" {}
-variable "os_tenant" {}
 variable "os_password" {}
 variable "os_auth_url" {}
 
 variable "os_network" {}
 variable "os_flavor_id" {}
 
-#Configure the Hetzner Cloud Provider
+#Configure the OpenStack Cloud Provider
 provider "openstack" {
   version = "~> 1.48.0"
   user_name		= "${var.os_username}"
-  tenant_name	= "${var.os_tenant}"
   password		= "${var.os_password}"
   auth_url		= "${var.os_auth_url}"
-  region		"${var.location}"
-
 }
 
 # Create a new SSH key
