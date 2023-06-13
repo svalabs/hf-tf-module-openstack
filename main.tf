@@ -1,0 +1,55 @@
+variable "public_key" {}
+variable "image" {}
+variable "name" {}
+variable "location" {}
+variable "cloud-config" {}
+
+variable "os_username" {}
+variable "os_tenant" {}
+variable "os_password" {}
+variable "os_auth_url" {}
+
+variable "os_network" {}
+variable "os_flavor_id" {}
+
+#Configure the Hetzner Cloud Provider
+provider "openstack" {
+  version = "~> 1.48.0"
+  user_name		= "${var.os_username}"
+  tenant_name	= "${var.os_tenant}"
+  password		= "${var.os_password}"
+  auth_url		= "${var.os_auth_url}"
+  region		"${var.location}"
+
+}
+
+# Create a new SSH key
+resource "openstack_compute_keypair_v2" "key" {
+  name       = "${var.name}-key"
+  public_key = "${var.public_key}"
+}
+
+resource "openstack_compute_instance_v2" "basic" {
+  name            = "${var.name}"
+  image_id        = "${var.image}"
+  flavor_id       = "${var.os_flavor_id}"
+  key_pair        = "${var.name}-key"
+  
+  user_data = "${var.cloud-config}"
+
+  network {
+    name = "${var.os_network}"
+  }
+}
+
+output "private_ip" {
+  value = "${openstack_compute_instance_v2.basic.access_ip_v4}"
+}
+
+output "public_ip" {
+  value = "${openstack_compute_instance_v2.basic.access_ip_v4}"
+}
+
+output "hostname" {
+  value = "${openstack_compute_instance_v2.basic.name}"
+}
