@@ -10,16 +10,6 @@ variable "os_auth_url" {}
 variable "os_network" {}
 variable "os_flavor_id" {}
 
-terraform {
-required_version = ">= 0.14.0"
-  required_providers {
-    openstack = {
-      source  = "terraform-provider-openstack/openstack"
-      version = "~> 1.48.0"
-    }
-  }
-}
-
 #Configure the OpenStack Cloud Provider
 provider "openstack" {
   user_name		= "${var.os_username}"
