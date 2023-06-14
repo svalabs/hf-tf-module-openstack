@@ -3,8 +3,8 @@ variable "image" {}
 variable "name" {}
 variable "cloud-config" {}
 
-variable "os_username" {}
-variable "os_password" {}
+variable "os_application_credential_secret" {}
+variable "os_application_credential_id" {}
 variable "os_tenant" {}
 variable "os_auth_url" {}
 
@@ -23,8 +23,8 @@ required_version = ">= 0.14.0"
 
 #Configure the OpenStack Cloud Provider
 provider "openstack" {
-  user_name		= var.os_username
-  password		= var.os_password
+  application_credential_secret		= var.os_application_credential_secret
+  application_credential_id		= var.os_application_credential_id
   auth_url		= var.os_auth_url
   tenant_name = var.os_tenant
 }
