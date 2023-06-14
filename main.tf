@@ -38,7 +38,7 @@ resource "openstack_compute_keypair_v2" "key" {
 resource "openstack_compute_instance_v2" "basic" {
   name            = var.name
   image_id        = var.image
-  flavor_id       = var.os_flavor_id
+  flavor_name       = var.os_flavor_id
   key_pair        = "${var.name}-key"
   
   user_data = var.cloud-config
